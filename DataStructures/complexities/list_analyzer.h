@@ -1,7 +1,6 @@
 #pragma once
 
 #include <complexities/complexity_analyzer.h>
-#include <iterator>
 #include <list>
 #include <random>
 #include <vector>
@@ -76,71 +75,68 @@ namespace ds::utils
 
     template<class List>
     ListAnalyzer<List>::ListAnalyzer(const std::string& name) :
-        ComplexityAnalyzer<List>(name, std::function<void(List&, size_t)>()),
-        //                             ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
-        // TODO 01 Namiesto defaultne vytvorenÈho - pr·zdneho - funkËnÈho objektu je potrebnÈ
-        //         parameter spr·vne inicializovaù!
-        rngData_(std::random_device()()),
-        rngIndex_(std::random_device()()),
-        index_(0),
-        data_(0)
+        ComplexityAnalyzer<List>(name, [this](List& list, size_t n)
+            {
+                this->insertNElements(list, n);
+            }),
+        rngData_(144),
+                rngIndex_(144),
+                index_(0),
+                data_(0)
     {
     }
 
-    template<class List>
-    void ListAnalyzer<List>::beforeOperation(List& structure)
-    {
-        std::uniform_int_distribution<size_t> indexDist(0, structure.size() - 1);
-        index_ = indexDist(this->rngIndex_);
-        data_ = rngData_();
-    }
+            template<class List>
+            void ListAnalyzer<List>::beforeOperation(List& structure)
+            {
+                std::uniform_int_distribution<size_t> indexDist(0, structure.size() - 1);
+                index_ = indexDist(this->rngIndex_);
+                data_ = rngData_();
+            }
 
-    template<class List>
-    size_t ListAnalyzer<List>::getRandomIndex() const
-    {
-        return index_;
-    }
+            template<class List>
+            size_t ListAnalyzer<List>::getRandomIndex() const
+            {
+                return index_;
+            }
 
-    template<class List>
-    int ListAnalyzer<List>::getRandomData() const
-    {
-        return data_;
-    }
+            template<class List>
+            int ListAnalyzer<List>::getRandomData() const
+            {
+                return data_;
+            }
 
-    template<class List>
-    void ListAnalyzer<List>::insertNElements(List& list, size_t n)
-    {
-        for (size_t i = 0; i < n; ++i)
-        {
-            list.push_back(rngData_());
-        }
-    }
+            template<class List>
+            void ListAnalyzer<List>::insertNElements(List& list, size_t n)
+            {
+                for (size_t i = 0; i < n; ++i)
+                {
+                    list.push_back(rngData_());
+                }
+            }
 
-    template <class List>
-    ListInsertAnalyzer<List>::ListInsertAnalyzer(const std::string& name) :
-        ListAnalyzer<List>(name)
-    {
-    }
+            template <class List>
+            ListInsertAnalyzer<List>::ListInsertAnalyzer(const std::string& name) :
+                ListAnalyzer<List>(name)
+            {
+            }
 
-    template <class List>
-    void ListInsertAnalyzer<List>::executeOperation(List& structure)
-    {
-        // TODO 01
-        // po implementacii vymazte vyhodenie vynimky!
-        throw std::runtime_error("Not implemented yet");
-    }
+            template <class List>
+            void ListInsertAnalyzer<List>::executeOperation(List& structure)
+            {
+                auto data = this->getRandomData();
+                structure.insert(structure.begin(), data);
+            }
 
-    template <class List>
-    ListRemoveAnalyzer<List>::ListRemoveAnalyzer(const std::string& name) :
-        ListAnalyzer<List>(name)
-    {
-    }
+            template <class List>
+            ListRemoveAnalyzer<List>::ListRemoveAnalyzer(const std::string& name) :
+                ListAnalyzer<List>(name)
+            {
+            }
 
-    template <class List>
-    void ListRemoveAnalyzer<List>::executeOperation(List& structure)
-    {
-        // TODO 01
-        // po implementacii vymazte vyhodenie vynimky!
-        throw std::runtime_error("Not implemented yet");
-    }
+            template <class List>
+            void ListRemoveAnalyzer<List>::executeOperation(List& structure)
+            {
+                structure.erase(structure.begin());
+            }
 }
