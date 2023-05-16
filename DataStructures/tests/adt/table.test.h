@@ -420,7 +420,7 @@ namespace ds::tests
                     auto data = table.find(key);
                     this->assert_equals(key, data);
                 }
-                    break;
+                break;
 
                 case 2: // remove
                 {
@@ -433,7 +433,7 @@ namespace ds::tests
                     keys.pop_back();
                     this->assert_equals(keys.size(), table.size());
                 }
-                    break;
+                break;
 
                 default:
                     // Unreachable

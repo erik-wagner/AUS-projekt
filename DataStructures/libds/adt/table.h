@@ -254,7 +254,7 @@ namespace ds::adt {
     //----------
 
     template <typename K, typename T>
-    struct TreapItem:
+    struct TreapItem :
         public TabItem<K, T>
     {
         int priority_;
@@ -279,7 +279,7 @@ namespace ds::adt {
 
     //----------
 
-   template<typename K, typename T>
+    template<typename K, typename T>
     T& Table<K, T>::find(K key)
     {
         T* data = nullptr;
@@ -628,7 +628,7 @@ namespace ds::adt {
 
     template <typename K, typename T>
     HashTable<K, T>::HashTableIterator::HashTableIterator
-        (PrimaryRegionIterator* tablesFirst, PrimaryRegionIterator* tablesLast) :
+    (PrimaryRegionIterator* tablesFirst, PrimaryRegionIterator* tablesLast) :
         tablesCurrent_(tablesFirst),
         tablesLast_(tablesLast)
     {
@@ -643,7 +643,7 @@ namespace ds::adt {
 
     template <typename K, typename T>
     HashTable<K, T>::HashTableIterator::HashTableIterator
-        (const HashTableIterator& other) :
+    (const HashTableIterator& other) :
         tablesCurrent_(other.tablesCurrent_),
         tablesLast_(other.tablesLast_),
         synonymIterator_(other.synonymIterator_)
@@ -678,9 +678,9 @@ namespace ds::adt {
     bool HashTable<K, T>::HashTableIterator::operator==(const HashTableIterator& other) const
     {
         return synonymIterator_ == other.synonymIterator_ ||
-                 (synonymIterator_ != nullptr &&
-                   other.synonymIterator_ != nullptr &&
-                   *synonymIterator_ == *(other.synonymIterator_));
+            (synonymIterator_ != nullptr &&
+                other.synonymIterator_ != nullptr &&
+                *synonymIterator_ == *(other.synonymIterator_));
     }
 
     template <typename K, typename T>
@@ -716,14 +716,14 @@ namespace ds::adt {
     }
 
     template<typename K, typename T, typename BlockType>
-    GeneralBinarySearchTree<K, T, BlockType>::GeneralBinarySearchTree():
+    GeneralBinarySearchTree<K, T, BlockType>::GeneralBinarySearchTree() :
         ADS<TabItem<K, T>>(new amt::BinaryEH<BlockType>()),
         size_(0)
     {
     }
 
     template<typename K, typename T, typename BlockType>
-    GeneralBinarySearchTree<K, T, BlockType>::GeneralBinarySearchTree(const GeneralBinarySearchTree& other):
+    GeneralBinarySearchTree<K, T, BlockType>::GeneralBinarySearchTree(const GeneralBinarySearchTree& other) :
         ADS<TabItem<K, T>>(new amt::BinaryEH<BlockType>(), other),
         size_(other.size_)
     {
@@ -892,7 +892,7 @@ namespace ds::adt {
     //----------
 
     template<typename K, typename T>
-    Treap<K, T>::Treap():
+    Treap<K, T>::Treap() :
         rng_(std::rand())
     {
     }
